@@ -18,7 +18,7 @@ const TEAM = [
   if (!grid) return;
 
   // Background colours for initials avatars (all pass contrast with white text)
-  const AVATAR_COLOURS = ["#1f6feb", "#1a7f37", "#8250df", "#bf3989", "#0e7c86", "#b35900"];
+  const AVATAR_COLOURS = ["#0b6e4f", "#b4462f", "#2f5d8a", "#8a5a00", "#6b4e3d", "#0e6e7a"];
 
   const ICONS = {
     linkedin:

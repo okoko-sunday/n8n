@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="170" height="40" viewBox="0 0 170 40" role="img" aria-labelledby="title">
   <title id="title">ShopEase</title>
-  <rect x="0" y="0" width="40" height="40" rx="11" fill="#1f6feb"/>
+  <path d="M11 0h18a11 11 0 0 1 11 11v18a11 11 0 0 1-11 11H4a4 4 0 0 1-4-4V11A11 11 0 0 1 11 0z" fill="#0b6e4f"/>
   <path d="M15 15v-2.2a5 5 0 0 1 10 0V15" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
   <path d="M10.5 15h19l-1.6 14.6a2.2 2.2 0 0 1-2.2 2H14.3a2.2 2.2 0 0 1-2.2-2z" fill="#ffffff"/>
-  <path d="M15.6 23.2l3 3 5.8-6" fill="none" stroke="#1f6feb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="50" y="27.5" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="-0.3">
-    <tspan fill="#1b2430">Shop</tspan><tspan fill="#1758c7">Ease</tspan>
+  <path d="M15.6 23.2l3 3 5.8-6" fill="none" stroke="#0b6e4f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="36" cy="4" r="4" fill="#f2a516"/>
+  <text x="50" y="27.5" font-family="'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-size="21" font-weight="800" letter-spacing="-0.6">
+    <tspan fill="#1c1a17">Shop</tspan><tspan fill="#0b6e4f">Ease</tspan>
   </text>
 </svg>
