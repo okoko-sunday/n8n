@@ -9,7 +9,7 @@
    github:   full https:// link, or "" to hide the icon
    ========================================================================== */
 const TEAM = [
-  { name: "Racheal Mfon", title: "Group Lead", lead: true, bio: "", photo: "", linkedin: "", github: "" },
+  { name: "Racheal Mfon", title: "Group Lead", lead: true, bio: "", photo: "images/team/rachel.jpg", linkedin: "", github: "" },
   { name: "Ismail Adam", title: "Assistant Group Lead", lead: true, bio: "", photo: "", linkedin: "", github: "" },
   { name: "Okoko Sunday", title: "Group Member", bio: "", photo: "images/team/sunday.jpeg", linkedin: "", github: "" },
   { name: "Anumtyo Abraham", title: "Group Member", bio: "", photo: "images/team/abraham.jpeg", linkedin: "", github: "" },
