@@ -15,7 +15,7 @@ const TEAM = [
   { name: "Anumtyo Abraham", title: "Group Member", bio: "", photo: "images/team/abraham.jpeg", linkedin: "", github: "" },
   { name: "Divine Chidiebere", title: "Group Member", bio: "", photo: "images/team/excel.jpg", linkedin: "", github: "" },
   { name: "Dikko Paul", title: "Group Member", bio: "", photo: "images/team/paul.jpg", linkedin: "", github: "" },
-  { name: "Ajunwa Esther", title: "Group Member", bio: "", photo: "", linkedin: "", github: "" }
+  { name: "Ajunwa Esther", title: "Group Member", bio: "", photo: "images/team/esther.jpeg", linkedin: "", github: "" }
 ];
 
 (() => {
