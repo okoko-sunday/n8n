@@ -73,7 +73,7 @@
   // Runs after DOMContentLoaded so cards built by other scripts (team.js) are included.
   // Content already on screen is never hidden, so nothing flickers on load.
   const REVEAL_SELECTOR =
-    ".section-head, .stats, .service-card, .mini-steps li, .flow-step, .compare-card, .failsafe, .cta-band, .team-card";
+    ".section-head, .stats, .service-card, .mini-steps li, .flow-step, .compare-card, .failsafe, .cta-band, .member-card";
 
   const initReveal = () => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
