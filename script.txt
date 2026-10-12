@@ -1,0 +1,144 @@
+Build a complete, multi-page static website for a fictional small Nigerian online shop called **ShopEase**. The site is the customer-facing front end for an n8n automation ("The Operations Autopilot") that receives customer requests, classifies them with AI, routes them to the right team, logs them in Google Sheets and emails the customer. The website's job is to present the business, collect requests through a form, send them to an n8n webhook, and show the team who built the project.
+
+## Tech constraints
+- Plain HTML, CSS and vanilla JavaScript only. No frameworks, no build step, no npm. It must work by opening the files through a simple local server and by deploying the folder as-is to Netlify Drop or GitHub Pages.
+- Use only relative paths so the site works from any folder or subpath.
+- One shared stylesheet and small shared JS files; no duplicated CSS across pages.
+- Mobile-first and fully responsive (the live demo will be done from a phone). No horizontal scrolling at 360px width.
+- Accessible: semantic HTML, labels on every input, visible focus states, alt text on images, good colour contrast, `aria-live` for form status messages.
+- No external dependencies except optionally one Google Font. No secrets anywhere in the code.
+
+## File structure
+```
+shopease-site/
+├── index.html            # Home
+├── request.html          # Submit a request (the form)
+├── how-it-works.html     # Explains the automation
+├── team.html             # Project team
+├── css/styles.css
+├── js/config.js          # WEBHOOK_URL and site settings (the only file to edit for setup)
+├── js/main.js            # Shared: nav toggle, active link, footer year
+├── js/request.js         # Form validation + submission
+├── js/team.js            # Team data + rendering
+├── images/
+│   ├── logo.svg          # Simple original logo (text + simple shape)
+│   └── team/             # Team photos go here (put a README.txt explaining naming)
+└── README.md
+```
+
+## Shared layout (every page)
+- Sticky header with the ShopEase logo/name on the left and navigation links: Home, Submit a Request, How It Works, Our Team.
+- The current page's link is highlighted (set automatically in `main.js` by comparing the current filename).
+- On small screens the nav collapses into a hamburger button that toggles a menu (with `aria-expanded`), closes when a link is clicked.
+- A prominent "Submit a Request" button in the header on desktop.
+- Footer with the shop name, a one-line description, the nav links again, and the current year (set by JS).
+
+## Design
+- Clean, modern and trustworthy. Light background, white cards, soft shadows, rounded corners (12–14px), one strong brand colour (blue, e.g. #1f6feb) with a darker hover shade, and a green success / red error colour.
+- Define all colours, spacing and radii as CSS custom properties on `:root`.
+- Comfortable typography (system font stack or Inter), generous spacing, max content width around 1100px.
+- Subtle hover transitions only; nothing flashy.
+
+## Page 1: Home (`index.html`)
+- Hero: headline like "Questions about your order? We've got you." with a short subtitle explaining that requests are answered fast and sent to the right team automatically. Primary button → request.html; secondary button → how-it-works.html.
+- "What we can help with" section: three cards — **Sales** (products, prices, availability), **Payments** (confirmations, failed payments, refunds), **Delivery** (shipping, tracking, missing parcels). Each card has a simple inline SVG icon, a short description, and links to request.html.
+- "How it works" teaser: 3 short steps (You send a request → Our system reads and routes it → The right team replies) with a link to how-it-works.html.
+- Closing call-to-action band linking to the form.
+
+## Page 2: Submit a Request (`request.html`) — the most important page
+Form fields:
+- Full name (required, max 100 chars)
+- Email address (required, valid email format, max 150 chars)
+- Your request (textarea, required, min 5 characters after trimming, max 2000, with a live character counter and a placeholder such as "e.g. Do you have a laptop available for ₦300,000?")
+- A hidden honeypot field named `website` (visually hidden, `tabindex="-1"`, `autocomplete="off"`). If it is filled, do not send anything, but show the normal success message.
+
+Do NOT add a category dropdown. Classifying the request is the AI's job in n8n; the page must only collect free text.
+
+Behaviour (`request.js`):
+- Client-side validation on submit with clear inline error messages under each field; focus the first invalid field.
+- Clean the data before sending: trim all fields, lowercase the email.
+- Send with `fetch` as `POST` to `CONFIG.WEBHOOK_URL`, header `Content-Type: application/json`, body exactly:
+  ```json
+  {
+    "name": "string",
+    "email": "string",
+    "message": "string",
+    "submitted_at": "ISO 8601 timestamp",
+    "source": "shopease_website"
+  }
+  ```
+  Do not send the honeypot field.
+- While sending: disable the button, show a spinner/"Sending…" text.
+- Use an AbortController timeout of 15 seconds.
+- On a 2xx response: reset the form and replace it with a success panel: "Thank you, {name}! Your request has been received. We've sent a confirmation to {email}." plus a "Send another request" button that brings the form back.
+- On a network error, timeout or non-2xx: keep the user's input, show a friendly error message with a "Try again" option. Log details to the console only.
+- If `CONFIG.WEBHOOK_URL` still contains the placeholder text, show a clear warning banner on the page ("Webhook URL not configured — see js/config.js") instead of trying to send.
+- Next to the form, show a small info card: what happens after you submit (you get an email confirmation; clear requests are routed instantly; unclear ones are reviewed by a person; typical response time).
+
+**Demo mode** (for the live presentation): when the URL contains `?demo=1`, show a "Demo samples" panel above the form with buttons that fill the form with sample data:
+- "Clear – Sales": "Do you have a laptop available for ₦300,000?"
+- "Clear – Payment": "I paid ₦45,000 for order #4521 yesterday but I haven't received a payment confirmation."
+- "Clear – Delivery": "My parcel for order #3310 was supposed to arrive on Friday. Can you give me the tracking update?"
+- "Ambiguous": "There is a problem with what happened yesterday. Please sort it out."
+- "Ambiguous – overlapping": "I was charged twice and the item still hasn't come. Should I cancel?"
+Each sample fills a realistic name and an email field left for the presenter to type (or use `CONFIG.DEMO_EMAIL` if set). The panel is hidden completely without `?demo=1`.
+
+## Page 3: How It Works (`how-it-works.html`)
+A plain-language explanation of the automation behind the form, aimed at business owners. Build a responsive vertical/horizontal step diagram in HTML/CSS (no images) showing:
+1. **Request received** — the website sends your message to our automation (n8n webhook).
+2. **Cleaned and checked** — spaces removed, email standardised, empty messages rejected before any AI is used.
+3. **AI reads it** — an AI model classifies it as Sales, Payment or Delivery, estimates its confidence and drafts a reply.
+4. **Confidence check** — 0.85 or higher is routed automatically; anything lower goes to a human reviewer.
+5. **Recorded** — every request is logged in a spreadsheet with its category, confidence and status.
+6. **Notified** — the right team gets an email, and the customer receives a confirmation.
+
+Then a two-column section contrasting "Clear request → routed automatically" with "Unclear request → held for a human", using the two example messages above.
+Then a short "When something goes wrong" section: if the AI service fails or the spreadsheet is unavailable, the request is not lost — it goes to a human and staff get an alert.
+Then a call-to-action to the form.
+
+## Page 4: Our Team (`team.html`)
+- Intro text: "The team behind The Operations Autopilot."
+- A responsive grid of team cards (1 column on phones, 2 on tablets, 3–4 on desktop). Each card shows: photo (circular or rounded, fixed aspect ratio, `object-fit: cover`, lazy-loaded), full name, title/role, and an optional short one-line bio. Optional LinkedIn/GitHub links shown as small icon links only if provided.
+- The cards are rendered by `team.js` from a data array at the top of the file so the team can be edited in one place without touching HTML:
+  ```js
+  const TEAM = [
+    { name: "Sunday Okoko", title: "Workflow Engineer", bio: "Built the n8n automation and AI routing.", photo: "images/team/sunday.jpg", linkedin: "", github: "" },
+    { name: "Team Member 2", title: "Role", bio: "", photo: "images/team/member2.jpg", linkedin: "", github: "" },
+    { name: "Team Member 3", title: "Role", bio: "", photo: "images/team/member3.jpg", linkedin: "", github: "" },
+    { name: "Team Member 4", title: "Role", bio: "", photo: "images/team/member4.jpg", linkedin: "", github: "" }
+  ];
+  ```
+- If a photo is missing or fails to load (`onerror`), replace it with a coloured circle showing the person's initials, so the page never shows a broken image.
+- Also render a `<noscript>` message asking users to enable JavaScript.
+- In `images/team/README.txt`, explain: put square photos (at least 400×400, JPG/PNG/WebP, under 300KB) here and update the `photo` paths in `js/team.js`.
+
+## config.js
+```js
+const CONFIG = {
+  WEBHOOK_URL: "https://YOUR-N8N-INSTANCE/webhook/support-request", // paste the n8n PRODUCTION webhook URL
+  DEMO_EMAIL: "",            // optional: pre-fill email in demo mode
+  RESPONSE_TIME: "within 24 hours",
+  SHOP_NAME: "ShopEase"
+};
+```
+Load `config.js` before `request.js` on the request page.
+
+## README.md
+Write clear setup instructions for a beginner:
+1. Project overview and page list.
+2. How to run locally: `cd shopease-site && python3 -m http.server 8000`, then open http://localhost:8000.
+3. How to connect n8n: create a **Webhook** node (Method POST, path `support-request`, Respond: Immediately, Options → Allowed Origins (CORS): `*` or the site's domain), activate/publish the workflow, copy the **Production URL** (not the Test URL) into `js/config.js`. In n8n the fields arrive as `$json.body.name`, `$json.body.email`, `$json.body.message`, `$json.body.submitted_at`.
+4. How to add team members and photos.
+5. How to deploy: Netlify Drop (drag the `shopease-site` folder onto app.netlify.com/drop) and GitHub Pages.
+6. How to use demo mode: open `request.html?demo=1`.
+7. Troubleshooting: 404 (test vs production URL, workflow not active), CORS error in the browser console (set Allowed Origins on the Webhook node), request not arriving (check n8n Executions), photos not showing (path/filename case).
+8. A `curl` command to send a malformed request directly to the webhook for testing the n8n validation path:
+   `curl -X POST "YOUR_PRODUCTION_URL" -H "Content-Type: application/json" -d '{"name":"   ","email":"bad","message":"   "}'`
+
+## Quality checks before you finish
+- Open every page and confirm nav links, active state and the mobile menu work.
+- Confirm the form blocks invalid input, shows the placeholder-URL warning when not configured, and that the request body matches the JSON contract exactly.
+- Confirm demo mode only appears with `?demo=1`.
+- Confirm the team page renders initials when photos are missing.
+- Check there are no console errors and the layout works at 360px, 768px and 1280px widths.
+- Summarise what you built and list the exact steps I need to take next (paste webhook URL, add photos, deploy).

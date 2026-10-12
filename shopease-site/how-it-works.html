@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How It Works — ShopEase</title>
+  <meta name="description" content="A plain-language look at the automation behind the ShopEase request form: how requests are checked, classified, routed and recorded.">
+  <meta name="theme-color" content="#1f6feb">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%231f6feb'/%3E%3Cpath d='M10.5 15h19l-1.6 14.6a2.2 2.2 0 0 1-2.2 2H14.3a2.2 2.2 0 0 1-2.2-2z' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><img src="images/logo.svg" alt="ShopEase home" width="144" height="34"></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="request.html">Submit a Request</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="team.html">Our Team</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-primary header-cta" href="request.html">Submit a Request</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero on-dark">
+      <div class="container">
+        <span class="pill"><span class="pill-dot" aria-hidden="true"></span>The Operations Autopilot</span>
+        <h1>How it <span class="text-gradient">works</span></h1>
+        <p class="lead">Behind our request form is an automation that reads every message, decides who should handle it, and keeps a record, all in a few seconds. Here's what happens, step by step.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="flow-title">
+      <div class="container">
+        <div class="section-head is-center">
+          <span class="eyebrow">Six steps, a few seconds</span>
+          <h2 id="flow-title">What happens to <span class="text-gradient">your message</span></h2>
+        </div>
+        <ol class="flow">
+          <li class="flow-step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div class="card flow-card">
+              <h3>Request received</h3>
+              <p>The website sends your message to our automation (an n8n webhook) the moment you press Send.</p>
+            </div>
+          </li>
+          <li class="flow-step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div class="card flow-card">
+              <h3>Cleaned and checked</h3>
+              <p>Extra spaces are removed, the email is standardised, and empty messages are rejected before any AI is used.</p>
+            </div>
+          </li>
+          <li class="flow-step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div class="card flow-card">
+              <h3>AI reads it</h3>
+              <p>An AI model classifies it as Sales, Payment or Delivery, estimates how confident it is, and drafts a reply.</p>
+            </div>
+          </li>
+          <li class="flow-step is-decision">
+            <span class="step-num" aria-hidden="true">4</span>
+            <div class="card flow-card">
+              <h3>Confidence check</h3>
+              <p>A score of 0.85 or higher is routed automatically. Anything lower goes to a human reviewer.</p>
+              <div class="branch-tags">
+                <span class="tag tag-success">≥ 0.85 → auto-route</span>
+                <span class="tag tag-warning">&lt; 0.85 → human review</span>
+              </div>
+            </div>
+          </li>
+          <li class="flow-step">
+            <span class="step-num" aria-hidden="true">5</span>
+            <div class="card flow-card">
+              <h3>Recorded</h3>
+              <p>Every request is logged in a spreadsheet with its category, confidence score and status.</p>
+            </div>
+          </li>
+          <li class="flow-step">
+            <span class="step-num" aria-hidden="true">6</span>
+            <div class="card flow-card">
+              <h3>Notified</h3>
+              <p>The right team gets an email, and you receive a confirmation that your request has arrived.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="compare-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Two examples</span>
+          <h2 id="compare-title">Clear requests move fast. <span class="text-gradient">Unclear ones get a person.</span></h2>
+          <p>The AI only acts on its own when it's confident. When it isn't sure, a member of staff takes a look first.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <article class="card compare-card" aria-labelledby="auto-title">
+            <span class="tag tag-success">Routed automatically</span>
+            <h3 id="auto-title">Clear request</h3>
+            <blockquote>“Do you have a laptop available for ₦300,000?”</blockquote>
+            <dl>
+              <div><dt>Category</dt><dd>Sales</dd></div>
+              <div><dt>Confidence (example)</dt><dd>0.96</dd></div>
+              <div><dt>What happens</dt><dd>Sent straight to the Sales team</dd></div>
+            </dl>
+          </article>
+
+          <article class="card compare-card is-human" aria-labelledby="human-title">
+            <span class="tag tag-warning">Held for a human</span>
+            <h3 id="human-title">Unclear request</h3>
+            <blockquote>“There is a problem with what happened yesterday. Please sort it out.”</blockquote>
+            <dl>
+              <div><dt>Category</dt><dd>Not clear</dd></div>
+              <div><dt>Confidence (example)</dt><dd>0.40</dd></div>
+              <div><dt>What happens</dt><dd>A staff member reviews it first</dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="failsafe-title">
+      <div class="container">
+        <div class="card failsafe">
+          <span class="icon-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+          </span>
+          <div>
+            <h2 id="failsafe-title">When something goes wrong</h2>
+            <p>Technology sometimes fails. If it does, your request is <strong>not lost</strong>.</p>
+            <ul class="check-list">
+              <li>If the AI service is unavailable, your request goes straight to a human instead.</li>
+              <li>If the spreadsheet can't be reached, the request is still passed on to staff.</li>
+              <li>Our staff get an alert so they can fix the problem and follow up with you.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-flush" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-band">
+          <h2 id="cta-title">Ready to ask us something?</h2>
+          <p>Send your question now and see the process for yourself. You'll get a confirmation email within moments.</p>
+          <a class="btn btn-light btn-lg" href="request.html">Submit a Request</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand"><span class="footer-mark" aria-hidden="true"></span>ShopEase</p>
+        <p>Your friendly Nigerian online shop, with fast answers on sales, payments and delivery.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="request.html">Submit a Request</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="team.html">Our Team</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span data-year>2026</span> ShopEase. A demo project for The Operations Autopilot.</p>
+    </div>
+  </footer>
+</body>
+</html>
