@@ -216,7 +216,7 @@ curl -X POST "YOUR_PRODUCTION_URL" -H "Content-Type: application/json" -d '{"nam
 
 ## Built-in protections
 
-- **Validation:** name (required, ≤100 characters), email (required, valid format, ≤150), request (5–2000 characters after trimming).
+- **Validation:** name (required, ≤100 characters), email (required, valid format, ≤150), request (optional, up to 2000 characters).
 - **Spam honeypot:** a hidden `website` field. If a bot fills it in, nothing is sent but the bot sees a normal success message.
 - **15-second timeout:** if n8n doesn't answer in time, the user sees a friendly "try again" message and keeps what they typed.
 - **No secrets in the code:** the only setting is the public webhook URL.

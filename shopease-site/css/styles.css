@@ -1335,6 +1335,11 @@ a:hover {
   color: var(--color-error);
 }
 
+.field-optional {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
 .field input,
 .field textarea {
   display: block;

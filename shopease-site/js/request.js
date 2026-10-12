@@ -10,7 +10,7 @@
   const WEBHOOK_URL = String(cfg.WEBHOOK_URL || "").trim();
   const PLACEHOLDER_MARKER = "YOUR-N8N-INSTANCE";
   const TIMEOUT_MS = 15000;
-  const LIMITS = { name: 100, email: 150, messageMin: 5, messageMax: 2000 };
+  const LIMITS = { name: 100, email: 150, messageMax: 2000 };
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   const DEMO_SAMPLES = [
@@ -117,9 +117,8 @@
     else if (data.email.length > LIMITS.email) errors.email = `Your email must be ${LIMITS.email} characters or fewer.`;
     else if (!EMAIL_RE.test(data.email)) errors.email = "Please enter a valid email address, e.g. ada@example.com.";
 
-    if (!data.message) errors.message = "Please tell us how we can help.";
-    else if (data.message.length < LIMITS.messageMin) errors.message = `Please add a little more detail (at least ${LIMITS.messageMin} characters).`;
-    else if (data.message.length > LIMITS.messageMax) errors.message = `Please keep your request under ${LIMITS.messageMax} characters.`;
+    // The message is optional and has no minimum length; only the maximum is enforced
+    if (data.message.length > LIMITS.messageMax) errors.message = `Please keep your request under ${LIMITS.messageMax} characters.`;
 
     return errors;
   };
