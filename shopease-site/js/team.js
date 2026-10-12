@@ -11,7 +11,7 @@
 const TEAM = [
   { name: "Racheal Mfon", title: "Group Lead", lead: true, bio: "", photo: "images/team/rachel.jpg", linkedin: "", github: "" },
   { name: "Ismail Adam", title: "Assistant Group Lead", lead: true, bio: "", photo: "images/team/ismail.jpg", linkedin: "", github: "" },
-  { name: "Okoko Sunday", title: "Group Member", bio: "", photo: "images/team/sunday.jpeg", linkedin: "", github: "" },
+  { name: "Okoko Sunday", title: "Group Member", bio: "", photo: "images/team/sunday.png", linkedin: "", github: "" },
   { name: "Anumtyo Abraham", title: "Group Member", bio: "", photo: "images/team/abraham.jpeg", linkedin: "", github: "" },
   { name: "Divine Chidiebere", title: "Group Member", bio: "", photo: "images/team/excel.jpg", linkedin: "", github: "" },
   { name: "Dikko Paul", title: "Group Member", bio: "", photo: "images/team/paul.jpg", linkedin: "", github: "" },
