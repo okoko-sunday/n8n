@@ -142,3 +142,19 @@ Write clear setup instructions for a beginner:
 - Confirm the team page renders initials when photos are missing.
 - Check there are no console errors and the layout works at 360px, 768px and 1280px widths.
 - Summarise what you built and list the exact steps I need to take next (paste webhook URL, add photos, deploy).
+
+
+
+
+
+
+
+
+
+
+
+https://swald.app.n8n.cloud/webhook/support-request
+
+
+
+
